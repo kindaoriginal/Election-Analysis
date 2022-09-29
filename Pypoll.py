@@ -10,6 +10,16 @@ import csv
 file_to_load = os.path.join('C:/Users/Ashton/Desktop/Classwork/Election Analysis Remote/Election-Analysis/Resources/election_results.csv')
 file_to_save = os.path.join('C:/Users/Ashton/Desktop/Classwork/Election Analysis Remote/Election-Analysis/Analysis/election_analysis.txt')
 
+counties = []
+
+county_votes = {}
+
+county_majority = ""
+
+county_majority_count = 0
+
+total_cvotes = 0
+
 total_votes = 0
 
 candidate_options = []
@@ -22,6 +32,12 @@ winning_count = 0
 
 winning_percentage = 0
 
+wc = ""
+
+wcc = 0
+
+wcp = 0
+
 
 with open(file_to_load) as election_data:
      # To do: read and analyze the data here.
@@ -32,13 +48,26 @@ with open(file_to_load) as election_data:
     for row in file_reader:
         
         total_votes += 1
+        total_cvotes += 1
         candidate_name = row[2]
+        county = row[1]
         if candidate_name not in candidate_options:
             
             candidate_options.append(candidate_name)
             candidate_votes[candidate_name] = 0
 
         candidate_votes[candidate_name] += 1
+    
+    for county in counties:
+        cvotes = county_votes[county]
+        cvp = float(cvotes) / float(total_cvotes) * 100
+        if county not in counties:
+            counties.append(county)
+            county_votes[county] = 0
+        county_votes[county] += 1
+        if (cvotes > wcc) and (cvp > wcp):
+
+
 
 with open(file_to_save, "w") as txt_file:
     # Print the final vote count to the terminal.
